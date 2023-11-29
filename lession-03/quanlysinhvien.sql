@@ -65,10 +65,10 @@ foreign key (sub_id) references subject(sub_id),
 foreign key (student_id) references student(student_id)
 );
 
-insert into mark( sub_id, student_id, mark, exam_times)
-values( 1, 1, 8, 1),
-( 1, 2, 10, 2),
-( 2, 1, 12, 1);
+insert into mark(sub_id, student_id, mark, exam_times)
+values(1, 1, 8, 1),
+(1, 2, 10, 2),
+(2, 1, 12, 1);
 
 select * from student;
 
@@ -82,8 +82,6 @@ select student.student_id, student.student_name, class.class_name from student
 student join class on student.class_id = class.class_id
 where class.class_name = "A1";
 
-
-
 select student.student_id, 
 student.student_name, 
 subject.sub_name, mark.mark 
@@ -94,3 +92,30 @@ where subject.sub_name = 'CF'
 group by  student.student_id, 
 student.student_name, 
 subject.sub_name, mark.mark ;
+
+select * from student
+where student_name like "H%";
+
+select * from class
+where month(startdate) >= 12;
+
+select * from subject
+where credit BETWEEN 3 AND 5;
+
+update student
+set class_id = 2
+where student_name = 'Hung';
+
+SET SQL_SAFE_UPDATES = 0;
+SET SQL_SAFE_UPDATES = 1;
+
+select student.student_id, 
+student.student_name, 
+subject.sub_name, mark.mark 
+from student
+join mark on student.student_id = mark.student_id 
+join subject on mark.sub_id = subject.sub_id
+group by  student.student_id, 
+student.student_name, 
+subject.sub_name, mark.mark
+order by mark DESC;
