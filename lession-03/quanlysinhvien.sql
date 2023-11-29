@@ -70,7 +70,27 @@ values( 1, 1, 8, 1),
 ( 1, 2, 10, 2),
 ( 2, 1, 12, 1);
 
-select * from mark;
-select * from class;
 select * from student;
-select * from subject;
+
+select * from student
+where status = 1;
+
+select * from subject 
+where credit < 10;
+
+select student.student_id, student.student_name, class.class_name from student
+student join class on student.class_id = class.class_id
+where class.class_name = "A1";
+
+
+
+select student.student_id, 
+student.student_name, 
+subject.sub_name, mark.mark 
+from student
+join mark on student.student_id = mark.student_id 
+join subject on mark.sub_id = subject.sub_id
+where subject.sub_name = 'CF'
+group by  student.student_id, 
+student.student_name, 
+subject.sub_name, mark.mark ;
