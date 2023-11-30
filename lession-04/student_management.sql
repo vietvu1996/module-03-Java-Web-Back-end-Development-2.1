@@ -52,3 +52,15 @@ having avg(mark.mark) >= ALL (select avg(mark.mark)
 from mark
 group by mark.student_id
 );
+
+select * from subject
+where credit >= all (select credit from subject);
+
+select subject.sub_id, subject.sub_name, mark.mark from mark
+left join subject on mark.sub_id = subject.sub_id
+where mark.mark >= all (select mark from mark);
+
+select student.student_id, student.student_name, avg(mark.mark) as average_point from student
+join mark on mark.mark_id = student.student_id
+group by student.student_id, student.student_name
+order by avg(mark.mark) desc;
