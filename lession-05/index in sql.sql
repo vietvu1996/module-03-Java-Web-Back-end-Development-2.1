@@ -153,3 +153,19 @@ EXPLAIN SELECT * FROM customers WHERE customerName = 'Land of Toys Inc.';
 ALTER TABLE customers ADD INDEX idx_full_name(contactFirstName, contactLastName);
 EXPLAIN SELECT * FROM customers WHERE contactFirstName = 'Jean' or contactFirstName = 'King';
 ALTER TABLE customers DROP INDEX idx_full_name;
+
+delimiter //
+create procedure findAllCustomer()
+begin
+select * from customers;
+end //
+delimiter ;
+
+call findAllCustomer();
+
+delimiter //
+drop procedure if exists `findAllCustomer` //
+create procedure findAllCustomer()
+begin 
+select * from customers where customerNumber = 175;
+end //
