@@ -13,9 +13,11 @@ set sql_safe_updates = 0;
 update employee
 set is_delete = 1
 where id in (
-    select employee.id
-    from employee
-    left join contract on contract.employee_id = employee.id and year(contract.start_date) between 2022 and 2023
-    group by employee.id
-    having count(contract.id) = 0
-);
+    select id from (
+        select employee.id
+        from employee
+        left join contract on contract.employee_id = employee.id and year(start_date) between 2022 and 2023
+        group by employee.id
+        having count(contract.id) = 0
+    ) as tmp
+); 
