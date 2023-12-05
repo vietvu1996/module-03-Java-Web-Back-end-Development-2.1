@@ -1,0 +1,23 @@
+.header-name {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100;
+  font-size: 200%;
+  margin: auto;
+  text-align: left;
+}
+.header-desc {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 100%;
+  margin: auto;
+}
+.content {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 100%;
+  margin-top: 300;
+  text-indent: 20px;
+}
+span {
+  font-family: "Times New Roman", Times, serif;
+  color: rgb(175, 169, 236);
+  
+}
