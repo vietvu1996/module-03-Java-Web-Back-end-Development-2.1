@@ -1,4 +1,4 @@
-SELECT employee.id, employee.name, education_degree.name, `position`.name, 
+SELECT employee.id, employee.name, education_degree.name as 'trình độ', `position`.name as 'chức vụ', 
 employee.phone_number, employee.address, count(contract.id) as 'số hợp đồng' from employee
 join `position` on `position`.id = employee.position_id
 join education_degree on education_degree.id = employee.education_degree_id

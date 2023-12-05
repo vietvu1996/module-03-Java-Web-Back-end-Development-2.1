@@ -1,4 +1,4 @@
-select customer.id, customet.name from customer
+select customer.id, customer.name from customer
 join contract on contract.customer_id = customer.id
 
 where contract.customer_id in (
