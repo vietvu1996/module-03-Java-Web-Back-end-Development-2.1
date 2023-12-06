@@ -1,0 +1,48 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#header {
+  background-color: rgb(59, 89, 152);
+  height: 100px;
+  width: 100%;
+  float: left;
+  text-align: center;
+  padding-top: 50px;
+}
+
+#left ul {
+  text-align: left;
+  width: 20%;
+  padding-left: 50px;
+}
+
+#content {
+  display: block;
+  text-align: center;
+}
+#content h5 p {
+  display: flex;
+  flex-direction: row;
+  flex: 3;
+}
+#content1 {
+  width: 40%;
+  display: inline-block;
+  align-items: center;
+  border: 2px solid gray;
+  margin-top: -270px;
+}
+#right {
+  float: right;
+}
+
+#right ul {
+  text-align: left;
+  margin-top: -270px;
+}
+
+#header input {
+  height: 30px;
+  width: 1000px;
+}
