@@ -1,0 +1,16 @@
+table{
+    border-collapse: collapse;
+    backdrop-filter: blur(10px);
+    width: 75%;
+    margin: 0 auto;
+}
+
+tr{
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid darkgray;
+}
+
+h1 {
+    text-align: center;
+}
