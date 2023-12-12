@@ -69,7 +69,7 @@
     <div style="text-align: center;">
         <h1>User Management</h1>
         <h2>
-            <a href="${pageContext.request.contextPath}users?action=users">List All Users</a>
+            <a href="${pageContext.request.contextPath}/users?action=users">List All Users</a>
         </h2>
     </div>
 </div>
@@ -109,6 +109,24 @@
                     <td>
                         <label>
                             <input type="text" name="country" id="country" size="15"/>
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Permission:</th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="add" size="15"/> add |
+                        </label>
+                        <label>
+                            <input type="checkbox" name="edit" size="15"/> edit |
+                        </label>
+                        <label>
+                            <input type="checkbox" name="delete" size="15"/> delete |
+                        </label>
+                        <label>
+                            <input type="checkbox" name="view" size="15"/> view
                         </label>
                     </td>
                 </tr>

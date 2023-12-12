@@ -1,4 +1,4 @@
-package org.example.user_management.controller;
+package org.example.user_management_fix;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -11,7 +11,6 @@ import org.example.user_management.model.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "UserServlet", urlPatterns = "/users")
@@ -60,28 +59,8 @@ public class UserServlet extends HttpServlet {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String country = req.getParameter("country");
-
-        String add = req.getParameter("add");
-        String edit = req.getParameter("edit");
-        String delete = req.getParameter("delete");
-        String view = req.getParameter("view");
-        List<Integer> permissions = new ArrayList<>();
-        if(add != null){
-            permissions.add(1);
-        }
-        if(edit != null){
-            permissions.add(2);
-        }
-        if(delete != null){
-            permissions.add(3);
-        }
-        if(view != null){
-            permissions.add(4);
-        }
-
         User newUser = new User(name, email, country);
-//        userDAO.insertUserStore(newUser);
-        userDAO.addUserTransaction(newUser, permissions);
+        userDAO.insertUserStore(newUser);
         RequestDispatcher dispatcher = req.getRequestDispatcher("user/insert.jsp");
         dispatcher.forward(req, resp);
     }
@@ -143,4 +122,5 @@ public class UserServlet extends HttpServlet {
         RequestDispatcher dispatcher = req.getRequestDispatcher("user/insert.jsp");
         dispatcher.forward(req, resp);
     }
+
 }

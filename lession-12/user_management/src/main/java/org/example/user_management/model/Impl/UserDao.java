@@ -89,6 +89,62 @@ public class UserDao implements IUserDAO {
     }
 
     @Override
+    public void addUserTransaction(User user, List<Integer> permissions) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement assignment = null;
+
+        ResultSet rs = null;
+        try {
+            connection = getConnection();
+            connection.setAutoCommit(false);
+
+            preparedStatement = connection.prepareStatement(INSERT_USERS_SQL, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getCountry());
+
+            int rowAffected = preparedStatement.executeUpdate();
+
+            rs = preparedStatement.getGeneratedKeys();
+
+            int userId = 0;
+            if (rs.next()) {
+                userId = rs.getInt(1);
+            }
+            if (rowAffected == 1) {
+                String sqlPivot = "INSERT INTO user_permission(user_id, permission_id)" + "VALUES(?, ?)";
+                assignment = connection.prepareCall(sqlPivot);
+
+                for (int permissionId : permissions) {
+                    assignment.setInt(1, userId);
+                    assignment.setInt(2, permissionId);
+                    assignment.executeUpdate();
+                }
+                connection.commit();
+            } else {
+                connection.rollback();
+            }
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (assignment != null) assignment.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @Override
     public User selectUser(int id) {
         User user = null;
         try {
