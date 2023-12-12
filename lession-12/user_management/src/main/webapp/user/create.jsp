@@ -69,7 +69,7 @@
     <div style="text-align: center;">
         <h1>User Management</h1>
         <h2>
-            <a href="${pageContext.request.contextPath}/users?action=users">List All Users</a>
+            <a href="${pageContext.request.contextPath}users?action=users">List All Users</a>
         </h2>
     </div>
 </div>

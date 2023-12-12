@@ -15,7 +15,7 @@
 <div style="text-align: center;">
     <h1>User Management</h1>
     <h2>
-        <a href="${pageContext.request.contextPath}/users?action=create">Add New User</a>
+        <a href="users?action=create">Add New User</a>
     </h2>
 </div>
 <div align="center">
@@ -50,8 +50,8 @@
                 </td>
 
                 <td>
-                    <a href="${pageContext.request.contextPath}/users?action=update&id=${user.id}">Edit</a>
-                    <a href="${pageContext.request.contextPath}/users?action=delete&id=${user.id}">Delete</a>
+                    <a href="users?action=update&id=${user.id}">Edit</a>
+                    <a href="users?action=delete&id=${user.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
