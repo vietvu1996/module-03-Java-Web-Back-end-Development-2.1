@@ -17,6 +17,9 @@ public class UserDao implements IUserDAO {
     private static final String SELECT_ALL_USERS = "select * from users";
     private static final String DELETE_USERS_SQL = "delete from users where id =?;";
     private static final String UPDATE_USERS_SQL = "update users set name = ?, email = ?, country = ? where id = ?;";
+    private static final String SELECT_USER_BY_COUNTRY = "select * from users where country = ?";
+    private static final String SELECT_ALL_USER_BY_NAME = "select * from users order by name";
+
 
     public UserDao() {
     }
@@ -114,6 +117,41 @@ public class UserDao implements IUserDAO {
             rowUpdated = preparedStatement.executeUpdate() > 0;
         }
         return rowUpdated;
+    }
+
+    @Override
+    public List<User> selectUserByCountry(String country) throws SQLException {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_COUNTRY)) {
+            statement.setString(1, country);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                users.add(new User(id, name, email, country));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    @Override
+    public List<User> sortUserByName() throws SQLException {
+        List<User> users = new ArrayList<>();
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USER_BY_NAME);
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String email = rs.getString("email");
+            String country = rs.getString("country");
+            User user = new User(id, name, email, country);
+            users.add(user);
+        }
+        return users;
     }
 
     private void printSQLException(SQLException ex) {
