@@ -107,7 +107,8 @@ public class UserServlet extends HttpServlet {
                     showSearchForm(req, resp);
                     break;
                 case "test-without-tran":
-
+                    testWithOutTran(req, resp);
+                    break;
                 default:
                     listUsers(req, resp);
                     break;
