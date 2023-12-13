@@ -66,16 +66,16 @@ public class UserServlet extends HttpServlet {
         String delete = req.getParameter("delete");
         String view = req.getParameter("view");
         List<Integer> permissions = new ArrayList<>();
-        if(add != null){
+        if (add != null) {
             permissions.add(1);
         }
-        if(edit != null){
+        if (edit != null) {
             permissions.add(2);
         }
-        if(delete != null){
+        if (delete != null) {
             permissions.add(3);
         }
-        if(view != null){
+        if (view != null) {
             permissions.add(4);
         }
 
@@ -106,6 +106,8 @@ public class UserServlet extends HttpServlet {
                 case "search":
                     showSearchForm(req, resp);
                     break;
+                case "test-without-tran":
+
                 default:
                     listUsers(req, resp);
                     break;
@@ -142,5 +144,9 @@ public class UserServlet extends HttpServlet {
     private void showCreateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("user/insert.jsp");
         dispatcher.forward(req, resp);
+    }
+
+    private void testWithOutTran(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        userDAO.insertUpdateWithoutTransaction();
     }
 }

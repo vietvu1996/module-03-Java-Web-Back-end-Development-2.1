@@ -3,7 +3,9 @@ package org.example.user_management.model.Impl;
 
 import org.example.user_management.model.User;
 
+import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,17 @@ public class UserDao implements IUserDAO {
     private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, country =? where id = ?;";
     private static final String SELECT_USER_BY_COUNTRY = "select * from users where country = ?";
     private static final String SELECT_ALL_USER_BY_NAME = "select * from users order by name";
+    private static final String SQL_INSERT = "INSERT INTO EMPLOYEE (NAME, SALARY, CREATED_DATE) VALUES(?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE EMPLOYEE SET SALARY=? WHERE NAME=?";
+    private static final String SQL_TABLE_CREATE = "CREATE TABLE EMPLOYEE" +
+            "("
+            + " ID serial,"
+            + " NAME varchar(100) NOT NULL,"
+            + " SALARY numeric(15, 2) NOT NULL,"
+            + " CREATED_DATE timestamp,"
+            + " PRIMARY KEY (ID)"
+            + ")";
+    private static final String SQL_TABLE_DROP = "DROP TABLE IF EXISTS EMPLOYEE";
 
     public UserDao() {
     }
@@ -77,7 +90,7 @@ public class UserDao implements IUserDAO {
         String query = "{CALL insert_user(?,?,?)}";
 
         try (Connection connection = getConnection();
-             CallableStatement callableStatement = connection.prepareCall(query);) {
+             CallableStatement callableStatement = connection.prepareCall(query)) {
             callableStatement.setString(1, user.getName());
             callableStatement.setString(2, user.getEmail());
             callableStatement.setString(3, user.getCountry());
@@ -263,5 +276,25 @@ public class UserDao implements IUserDAO {
         return users;
     }
 
+    @Override
+    public void insertUpdateWithoutTransaction() {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             PreparedStatement psInsert = connection.prepareStatement(SQL_INSERT);
+             PreparedStatement psUpdate = connection.prepareStatement(SQL_UPDATE)) {
+            statement.execute(SQL_TABLE_DROP);
+            statement.execute(SQL_TABLE_CREATE);
 
+            psInsert.setString(1, "Quynh");
+            psInsert.setBigDecimal(2, new BigDecimal(10));
+            psInsert.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            psInsert.execute();
+
+            psUpdate.setBigDecimal(2, new BigDecimal(999.99));
+            psUpdate.setString(2, "Quynh");
+            psUpdate.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
